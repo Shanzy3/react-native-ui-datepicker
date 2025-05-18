@@ -22,6 +22,8 @@ export type WeekdayFormat = 'min' | 'short' | 'full';
 
 export type MonthFormat = 'short' | 'full';
 
+export type MinuteInterval = 1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30;
+
 export type LocalState = {
   date: DateType;
   startDate: DateType;
@@ -154,6 +156,7 @@ export interface DatePickerBaseProps {
   showOutsideDays?: boolean;
   timePicker?: boolean;
   use12Hours?: boolean;
+  minuteInterval?: MinuteInterval;
   initialView?: CalendarViews;
   containerHeight?: number;
   weekdaysHeight?: number;
@@ -171,6 +174,7 @@ export interface DatePickerBaseProps {
   disableMonthPicker?: boolean;
   disableYearPicker?: boolean;
   components?: CalendarComponents;
+  
   /** use to handle month and year selectors */
   month?: number;
   year?: number;

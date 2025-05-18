@@ -14,6 +14,7 @@ export default function SingleDatePicker() {
         date={date}
         onChange={({ date }) => setDate(date)}
         timePicker
+        minuteInterval={15}
         //use12Hours
         //minDate={new Date()}
         //maxDate={new Date(new Date().getFullYear(), 11, 31)} // end of the year

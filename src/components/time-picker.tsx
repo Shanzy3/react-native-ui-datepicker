@@ -19,17 +19,20 @@ import PeriodPicker from './time-picker/period-picker';
 export type Period = 'AM' | 'PM';
 
 const createNumberList = (
-  num: number,
+  total: number,
   numerals: Numerals,
-  startFrom: number = 0
+  startFrom: number = 0,
+  step: number = 1
 ): PickerOption[] => {
-  return Array.from({ length: num }, (_, i) => ({
-    value: i + startFrom,
-    text:
-      i + startFrom < 10
-        ? `${formatNumber(0, numerals)}${formatNumber(i + startFrom, numerals)}`
-        : `${formatNumber(i + startFrom, numerals)}`,
-  }));
+  const count = Math.ceil((total - startFrom) / step);
+  return Array.from({ length: count }, (_, i) => {
+    const value = startFrom + i * step;
+    const text =
+      value < 10
+        ? `${formatNumber(0, numerals)}${formatNumber(value, numerals)}`
+        : formatNumber(value, numerals);
+    return { value, text };
+  });
 };
 
 const TimePicker = () => {
@@ -42,6 +45,7 @@ const TimePicker = () => {
     timeZone,
     numerals = 'latn',
     use12Hours,
+    minuteInterval = 1
   } = useCalendarContext();
 
   const hours = useMemo(
@@ -49,8 +53,20 @@ const TimePicker = () => {
     [numerals, use12Hours]
   );
 
-  const minutes = useMemo(() => createNumberList(60, numerals), [numerals]);
+  const minutes = useMemo(
+    () => createNumberList(60, numerals, 0, minuteInterval),
+    [numerals, minuteInterval]
+  );
+ 
+ const selectedMinute = useMemo(() => {
+  if (minutes.some((m) => m.value === minute)) {
+    return minute;
+  }
+  // or pick the nearest or first
+  return minutes.length ? minutes[0].value : 0;
+}, [minutes, minute]);
 
+  
   const { hour, hour12, minute, period } = getParsedDate(date || currentDate);
 
   const handleChangeHour = useCallback(
@@ -130,7 +146,7 @@ const TimePicker = () => {
         </Text>
         <View style={defaultStyles.wheelContainer}>
           <Wheel
-            value={minute}
+            value={selectedMinute}
             items={minutes}
             setValue={handleChangeMinute}
             styles={styles}
