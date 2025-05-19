@@ -55,6 +55,8 @@ const WheelPicker: React.FC<Props> = ({
   containerProps = {},
   flatListProps = {},
 }) => {
+  const didMountRef = useRef(false);
+
   const momentumStarted = useRef(false);
   const selectedIndex = options.findIndex((item) => item.value === value);
 
@@ -82,6 +84,13 @@ const WheelPicker: React.FC<Props> = ({
   );
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    
+        // Ignore the initial scroll event to prevent unwanted zero reset
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
+
     const offsetY = Math.min(
       itemHeight * (options.length - 1),
       Math.max(event.nativeEvent.contentOffset.y, 0)

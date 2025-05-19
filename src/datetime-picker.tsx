@@ -308,23 +308,7 @@ const DateTimePicker = (
     }
   }, [timeZone, prevTimezone]);
 
-const prevDateRef = useRef<DateType>(date);
-
-
 useEffect(() => {
-
-    // Only skip re-running when in single mode and date prop hasn't changed
-  if (
-    mode === 'single' &&
-    date &&
-    prevDateRef.current &&
-    (prevDateRef.current as Date).getTime() === (date as Date).getTime()
-  ) {
-    return;
-  }
-  // Update ref for next comparison
-  prevDateRef.current = date;
-  
   if (mode === 'single') {
     let _date =
       (date &&
