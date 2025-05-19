@@ -15,7 +15,10 @@ export const TimeButton = () => {
     classNames,
     numerals = 'latn',
     use12Hours,
+    timeButtonPlaceholder,
   } = useCalendarContext();
+
+  const hasDate = date != null;
 
   const { hour, hour12, minute, period } = useMemo(
     () => getParsedDate(date || currentDate),
@@ -23,20 +26,20 @@ export const TimeButton = () => {
   );
 
   const labelText = useMemo(() => {
+    if (!hasDate) {
+      return timeButtonPlaceholder || 'Set Time';
+    }
     const hourValue = use12Hours ? hour12 : hour;
-
     const hourLabel =
       hourValue < 10
         ? `${formatNumber(0, numerals)}${formatNumber(hourValue, numerals)}`
         : `${formatNumber(hourValue, numerals)}`;
-
     const minuteLabel =
       minute < 10
         ? `${formatNumber(0, numerals)}${formatNumber(minute, numerals)}`
         : `${formatNumber(minute, numerals)}`;
-
     return `${hourLabel}:${minuteLabel} ${use12Hours ? period : ''}`.trim();
-  }, [numerals, hour, hour12, minute, use12Hours, period]);
+  }, [hasDate, timeButtonPlaceholder, numerals, hour, hour12, minute, use12Hours, period]);
 
   return (
     <Pressable

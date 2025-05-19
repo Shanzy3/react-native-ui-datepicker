@@ -116,6 +116,7 @@ const DateTimePicker = (
     onYearChange = () => {},
     use12Hours,
     minuteInterval = 1,
+    timeButtonPlaceholder,
   } = props;
 
   dayjs.tz.setDefault(timeZone);
@@ -139,6 +140,19 @@ const DateTimePicker = (
 
   const initialState: LocalState = useMemo(() => {
     let initialDate = dayjs().tz(timeZone);
+    // Round initial time up to nearest minute interval
+    if (timePicker) {
+      const currentMin = initialDate.minute();
+      const remainder = currentMin % minuteInterval;
+      if (remainder !== 0) {
+        const nextMin = currentMin + (minuteInterval - remainder);
+        if (nextMin >= 60) {
+          initialDate = initialDate.add(1, 'hour').minute(0);
+        } else {
+          initialDate = initialDate.minute(nextMin);
+        }
+      }
+    }
 
     if (mode === 'single' && date) {
       initialDate = dayjs(date);
@@ -217,6 +231,7 @@ const DateTimePicker = (
     year,
     timeZone,
     initialCalendarView,
+    minuteInterval
   ]);
 
   const [state, dispatch] = useReducer(
@@ -293,14 +308,31 @@ const DateTimePicker = (
     }
   }, [timeZone, prevTimezone]);
 
-  useEffect(() => {
-    if (mode === 'single') {
-      let _date =
-        (date &&
-          (timePicker
-            ? dayjs.tz(date, timeZone)
-            : getStartOfDay(dayjs.tz(date, timeZone)))) ??
-        date;
+useEffect(() => {
+  if (mode === 'single') {
+    let _date =
+      (date &&
+        (timePicker
+          ? dayjs.tz(date, timeZone)
+          : getStartOfDay(dayjs.tz(date, timeZone)))) ??
+      date;
+
+    // Round selected date up to next minute interval if timePicker
+    if (timePicker && _date) {
+      const tzDate = dayjs.tz(_date, timeZone);
+      const currentMin = tzDate.minute();
+      const rem = currentMin % minuteInterval;
+      if (rem !== 0) {
+        const nextMin = currentMin + (minuteInterval - rem);
+        if (nextMin >= 60) {
+          _date = tzDate.add(1, 'hour').minute(0).toDate();
+        } else {
+          _date = tzDate.minute(nextMin).toDate();
+        }
+      } else {
+        _date = tzDate.toDate();
+      }
+    }
 
       if (_date && maxDate && dayjs.tz(_date, timeZone).isAfter(maxDate)) {
         _date = dayjs.tz(maxDate, timeZone);
@@ -374,19 +406,20 @@ const DateTimePicker = (
         });
       }
     }
-  }, [
-    mode,
-    date,
-    startDate,
-    endDate,
-    dates,
-    minDate,
-    maxDate,
-    timePicker,
-    prevTimezone,
-    timeZone,
-    calendar,
-  ]);
+}, [
+  mode,
+  date,
+  startDate,
+  endDate,
+  dates,
+  minDate,
+  maxDate,
+  timePicker,
+  minuteInterval,
+  prevTimezone,
+  timeZone,
+  calendar,
+]);
 
   const setCalendarView = useCallback((view: CalendarViews) => {
     dispatch({ type: CalendarActionKind.SET_CALENDAR_VIEW, payload: view });
@@ -396,10 +429,22 @@ const DateTimePicker = (
     (selectedDate: DateType) => {
       if (onChange) {
         if (mode === 'single') {
-          const newDate = timePicker
+          let newDate = timePicker
             ? dayjs.tz(selectedDate, timeZone)
             : dayjs.tz(getStartOfDay(selectedDate), timeZone);
-
+          // Round newDate up to nearest minute interval if using timePicker
+          if (timePicker) {
+            const currentMin = newDate.minute();
+            const rem = currentMin % minuteInterval;
+            if (rem !== 0) {
+              const nextMin = currentMin + (minuteInterval - rem);
+              if (nextMin >= 60) {
+                newDate = newDate.add(1, 'hour').minute(0);
+              } else {
+                newDate = newDate.minute(nextMin);
+              }
+            }
+          }
           dispatch({
             type: CalendarActionKind.CHANGE_CURRENT_DATE,
             payload: newDate,
@@ -636,6 +681,7 @@ const DateTimePicker = (
       className,
       use12Hours,
       minuteInterval,
+      timeButtonPlaceholder,
     }),
     [
       mode,
@@ -667,6 +713,7 @@ const DateTimePicker = (
       className,
       use12Hours,
       minuteInterval,
+      timeButtonPlaceholder,
     ]
   );
 

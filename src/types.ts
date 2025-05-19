@@ -157,6 +157,7 @@ export interface DatePickerBaseProps {
   timePicker?: boolean;
   use12Hours?: boolean;
   minuteInterval?: MinuteInterval;
+  timeButtonPlaceholder?: string;
   initialView?: CalendarViews;
   containerHeight?: number;
   weekdaysHeight?: number;

@@ -93,8 +93,9 @@ const WheelPicker: React.FC<Props> = ({
       index++;
     }
 
-    if (index !== selectedIndex) {
-      onChange(options[index]?.value || 0);
+    // Always fire for new index or when value is zero (top of hour)
+    if (index !== selectedIndex || options[index]?.value === 0) {
+      onChange(options[index]?.value ?? 0);
     }
   };
 

@@ -57,17 +57,38 @@ const TimePicker = () => {
     () => createNumberList(60, numerals, 0, minuteInterval),
     [numerals, minuteInterval]
   );
- 
- const selectedMinute = useMemo(() => {
-  if (minutes.some((m) => m.value === minute)) {
-    return minute;
-  }
-  // or pick the nearest or first
-  return minutes.length ? minutes[0].value : 0;
-}, [minutes, minute]);
 
-  
+
   const { hour, hour12, minute, period } = getParsedDate(date || currentDate);
+
+  // Select the nearest minute tick (ensures 00 is recognized)
+  const selectedMinute = useMemo(() => {
+    // Ensure minute is a number
+    const currentMinute = typeof minute === 'number'
+      ? minute
+      : parseInt(`${minute}`, 10);
+
+    console.log('TimePicker: useMemo selectedMinute compute', {
+      rawMinute: minute,
+      currentMinute,
+      availableTicks: minutes.map(m => m.value),
+    });
+
+    // Find the closest available minute option
+    let closest = minutes[0].value;
+    let bestDiff = Math.abs(closest - currentMinute);
+
+    for (const m of minutes) {
+      const diff = Math.abs(m.value - currentMinute);
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        closest = m.value;
+      }
+    }
+
+    console.log('TimePicker: useMemo closest match', { closest, bestDiff });
+    return closest;
+  }, [minutes, minute]);
 
   const handleChangeHour = useCallback(
     (value: number) => {
@@ -88,6 +109,7 @@ const TimePicker = () => {
 
   const handleChangeMinute = useCallback(
     (value: number) => {
+      console.log('TimePicker: handleChangeMinute value', value);
       const newDate = dayjs.tz(date, timeZone).minute(value);
       onSelectDate(newDate);
     },
@@ -148,7 +170,9 @@ const TimePicker = () => {
           <Wheel
             value={selectedMinute}
             items={minutes}
-            setValue={handleChangeMinute}
+            setValue={(value: number) => {
+              handleChangeMinute(value);
+            }}
             styles={styles}
             classNames={classNames}
           />
