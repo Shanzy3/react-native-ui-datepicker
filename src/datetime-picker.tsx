@@ -117,6 +117,8 @@ const DateTimePicker = (
     use12Hours,
     minuteInterval = 1,
     timeButtonPlaceholder,
+    showViewToggleHeader = false,
+    toggleHeaderLabel,
   } = props;
 
   dayjs.tz.setDefault(timeZone);
@@ -682,6 +684,8 @@ useEffect(() => {
       use12Hours,
       minuteInterval,
       timeButtonPlaceholder,
+      showViewToggleHeader,
+      toggleHeaderLabel
     }),
     [
       mode,
@@ -714,6 +718,8 @@ useEffect(() => {
       use12Hours,
       minuteInterval,
       timeButtonPlaceholder,
+      showViewToggleHeader,
+      toggleHeaderLabel,
     ]
   );
 

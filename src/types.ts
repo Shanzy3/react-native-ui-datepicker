@@ -175,6 +175,8 @@ export interface DatePickerBaseProps {
   disableMonthPicker?: boolean;
   disableYearPicker?: boolean;
   components?: CalendarComponents;
+  showViewToggleHeader?: boolean;
+  toggleHeaderLabel: string;
   
   /** use to handle month and year selectors */
   month?: number;

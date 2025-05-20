@@ -1,8 +1,10 @@
 import React, { memo, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useCalendarContext } from '../../calendar-context';
 import type { HeaderProps, NavigationProps } from './types';
 import PrevButton from './prev-button';
 import NextButton from './next-button';
+import ViewToggle from './time-view-toggle';
 import Selectors from './selectors';
 import { isEqual } from 'lodash';
 
@@ -51,12 +53,14 @@ const Header = ({
   isRTL,
 }: HeaderProps) => {
   const style = useMemo(() => createDefaultStyles(isRTL), [isRTL]);
-
+  const { showViewToggleHeader, calendarView } = useCalendarContext();
   return (
     <View
       style={[style.headerContainer, styles?.header]}
       className={classNames?.header}
     >
+       {showViewToggleHeader && <ViewToggle />}
+       {!(showViewToggleHeader && calendarView === 'time') && (
       <View style={style.container}>
         {navigationPosition === 'left' ? (
           <>
@@ -94,6 +98,7 @@ const Header = ({
           </>
         )}
       </View>
+      )}
     </View>
   );
 };

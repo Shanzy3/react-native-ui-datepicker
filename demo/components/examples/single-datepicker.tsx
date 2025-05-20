@@ -18,6 +18,9 @@ export default function SingleDatePicker() {
        timeButtonPlaceholder="Set Time"
         //use12Hours
         minDate={new Date()}
+        showViewToggleHeader
+        toggleHeaderLabel={"Start Date"}
+        navigationPosition="right"
         //maxDate={new Date(new Date().getFullYear(), 11, 31)} // end of the year
       />
       <DateInput
