@@ -4,6 +4,7 @@ import {
   CustomDatePicker1,
   CustomDatePicker2,
   CustomDatePicker3,
+  YearOnlyPicker,
 } from '@/components/examples';
 import { Separator } from '@/components/ui/separator';
 
@@ -28,6 +29,10 @@ export default function ExamplesPage() {
       <Separator />
       <View className="items-center p-6">
         <CustomDatePicker3 />
+      </View>
+      <Separator />
+      <View className="items-center p-6">
+        <YearOnlyPicker />
       </View>
     </View>
   );

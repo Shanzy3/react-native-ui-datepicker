@@ -11,7 +11,13 @@ type Props = {
 };
 
 const Selectors = ({ position }: Props) => {
-  const { mode, calendarView, timePicker, showViewToggleHeader } = useCalendarContext();
+  const { 
+    mode, 
+    calendarView, 
+    timePicker, 
+    showViewToggleHeader,
+    yearPickerOnly 
+  } = useCalendarContext();
 
   return (
     <View
@@ -26,11 +32,14 @@ const Selectors = ({ position }: Props) => {
             },
       ]}
     >
-      <View style={defaultStyles.monthAndYear}>
-        {calendarView !== 'year' ? <MonthButton /> : null}
-        <YearButton />
-      </View>
-       {timePicker &&
+      {/* Hide month/year buttons when in year-only mode */}
+      {!yearPickerOnly && (
+        <View style={defaultStyles.monthAndYear}>
+          {calendarView !== 'year' ? <MonthButton /> : null}
+          <YearButton />
+        </View>
+      )}
+      {timePicker &&
        mode === 'single' &&
        calendarView !== 'year' &&
        !showViewToggleHeader ? (

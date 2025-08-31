@@ -85,7 +85,7 @@ export type CalendarYear = {
   isActivated: boolean;
 };
 
-export type SingleChange = (params: { date: DateType }) => void;
+export type SingleChange = (params: { date: DateType | number }) => void;
 
 export type RangeChange = (params: {
   startDate: DateType;
@@ -176,7 +176,10 @@ export interface DatePickerBaseProps {
   disableYearPicker?: boolean;
   components?: CalendarComponents;
   showViewToggleHeader?: boolean;
-  toggleHeaderLabel: string;
+  toggleHeaderLabel?: string;
+  showViewPickerButtons?: boolean;
+  /** If true, only shows year picker and returns just the year integer */
+  yearPickerOnly?: boolean;
   
   /** use to handle month and year selectors */
   month?: number;

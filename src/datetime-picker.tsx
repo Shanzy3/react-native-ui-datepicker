@@ -119,6 +119,8 @@ const DateTimePicker = (
     timeButtonPlaceholder,
     showViewToggleHeader = false,
     toggleHeaderLabel,
+    showViewPickerButtons = false,
+    yearPickerOnly = false,
   } = props;
 
   dayjs.tz.setDefault(timeZone);
@@ -128,8 +130,11 @@ const DateTimePicker = (
   const prevTimezone = usePrevious(timeZone);
 
   const initialCalendarView: CalendarViews = useMemo(
-    () => (mode !== 'single' && initialView === 'time' ? 'day' : initialView),
-    [mode, initialView]
+    () => {
+      if (yearPickerOnly) return 'year';
+      return mode !== 'single' && initialView === 'time' ? 'day' : initialView;
+    },
+    [mode, initialView, yearPickerOnly]
   );
 
   const firstDay = useMemo(
@@ -424,8 +429,10 @@ useEffect(() => {
 ]);
 
   const setCalendarView = useCallback((view: CalendarViews) => {
+    // Prevent view changes when in year-only mode
+    if (yearPickerOnly && view !== 'year') return;
     dispatch({ type: CalendarActionKind.SET_CALENDAR_VIEW, payload: view });
-  }, []);
+  }, [yearPickerOnly]);
 
   const onSelectDate = useCallback(
     (selectedDate: DateType) => {
@@ -601,9 +608,15 @@ useEffect(() => {
         type: CalendarActionKind.CHANGE_CURRENT_DATE,
         payload: newDate,
       });
-      setCalendarView('day');
+
+      // If yearPickerOnly mode, call onChange with just the year integer
+      if (yearPickerOnly && onChange) {
+        (onChange as SingleChange)({ date: value });
+      } else {
+        setCalendarView('day');
+      }
     },
-    [setCalendarView, onYearChange]
+    [setCalendarView, onYearChange, yearPickerOnly, onChange]
   );
 
   const onChangeMonth = useCallback(
@@ -685,7 +698,9 @@ useEffect(() => {
       minuteInterval,
       timeButtonPlaceholder,
       showViewToggleHeader,
-      toggleHeaderLabel
+      toggleHeaderLabel,
+      showViewPickerButtons,
+      yearPickerOnly,
     }),
     [
       mode,
@@ -720,6 +735,8 @@ useEffect(() => {
       timeButtonPlaceholder,
       showViewToggleHeader,
       toggleHeaderLabel,
+      showViewPickerButtons,
+      yearPickerOnly,
     ]
   );
 
