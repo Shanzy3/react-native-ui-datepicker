@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, useColorScheme } from 'react-native';
 import { useCalendarContext } from '../../calendar-context';
 import type { HeaderProps, NavigationProps } from './types';
 import PrevButton from './prev-button';
@@ -8,6 +8,7 @@ import ViewToggle from './time-view-toggle';
 import Selectors from './selectors';
 import { isEqual } from 'lodash';
 import { getYearRange } from '../../utils';
+import { COLORS } from '../../theme';
 
 const createDefaultStyles = (isRTL: boolean) =>
   StyleSheet.create({
@@ -55,6 +56,8 @@ const Header = ({
 }: HeaderProps) => {
   const style = useMemo(() => createDefaultStyles(isRTL), [isRTL]);
   const { showViewToggleHeader, calendarView, yearPickerOnly, currentYear } = useCalendarContext();
+  const colorScheme = useColorScheme();
+  const theme = (colorScheme ?? 'light') as 'light' | 'dark';
   
   // Show navigation/selectors based on mode
   const shouldShowNavigation = yearPickerOnly 
@@ -86,7 +89,11 @@ const Header = ({
              />
            </View>
            <View style={{ flex: 1, alignItems: 'center' }}>
-             <Text style={{ fontSize: 16, fontWeight: '500' }}>
+             <Text style={{ 
+               fontSize: 16, 
+               fontWeight: '500',
+               color: COLORS[theme].foreground 
+             }}>
                {(() => {
                  const years = getYearRange(currentYear);
                  return `${years[0]} - ${years[years.length - 1]}`;
