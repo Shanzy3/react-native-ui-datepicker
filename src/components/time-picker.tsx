@@ -75,14 +75,19 @@ const TimePicker = () => {
     });
 
     // Find the closest available minute option
-    let closest = minutes[0].value;
+    if (minutes.length === 0) return 0;
+    
+    const firstValue = minutes[0]?.value;
+    if (firstValue === undefined) return 0;
+    
+    let closest = Number(firstValue);
     let bestDiff = Math.abs(closest - currentMinute);
 
     for (const m of minutes) {
-      const diff = Math.abs(m.value - currentMinute);
+      const diff = Math.abs(Number(m.value) - currentMinute);
       if (diff < bestDiff) {
         bestDiff = diff;
-        closest = m.value;
+        closest = Number(m.value);
       }
     }
 

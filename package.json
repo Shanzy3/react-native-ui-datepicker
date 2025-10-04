@@ -1,7 +1,7 @@
 {
-  "name": "react-native-ui-datepicker",
-  "version": "3.1.2",
-  "description": "Customizable date picker for React Native",
+  "name": "@ericboles/react-native-ui-datepicker",
+  "version": "3.2.0",
+  "description": "Customizable date picker for React Native with minute interval and year-only picker support",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -60,15 +60,17 @@
     "timepicker",
     "time-picker",
     "calendar",
-    "daterange"
+    "daterange",
+    "minute-interval",
+    "year-picker"
   ],
-  "repository": "https://github.com/farhoudshapouran/react-native-ui-datepicker",
-  "author": "Farhoud Shapouran <shapouran@gmail.com> (https://github.com/farhoudshapouran)",
+  "repository": "https://github.com/ericboles/react-native-ui-datepicker",
+  "author": "Eric Boles (based on work by Farhoud Shapouran <shapouran@gmail.com>)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/farhoudshapouran/react-native-ui-datepicker/issues"
+    "url": "https://github.com/ericboles/react-native-ui-datepicker/issues"
   },
-  "homepage": "https://github.com/farhoudshapouran/react-native-ui-datepicker#readme",
+  "homepage": "https://github.com/ericboles/react-native-ui-datepicker#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

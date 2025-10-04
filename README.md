@@ -4,14 +4,32 @@
 
 <div align="center">
 
- [![npm version](https://img.shields.io/npm/v/react-native-ui-datepicker)](https://www.npmjs.com/package/react-native-ui-datepicker)
-[![npm downloads](https://img.shields.io/npm/dm/react-native-ui-datepicker.svg)](https://www.npmjs.com/package/react-native-ui-datepicker)
-[![Github](https://img.shields.io/github/license/farhoudshapouran/react-native-ui-datepicker)](https://github.com/farhoudshapouran/react-native-ui-datepicker)
-[![gzipped size](https://img.shields.io/bundlephobia/minzip/react-native-ui-datepicker)](https://www.npmjs.com/package/react-native-ui-datepicker)
+ [![npm version](https://img.shields.io/npm/v/@ericboles/react-native-ui-datepicker)](https://www.npmjs.com/package/@ericboles/react-native-ui-datepicker)
+[![npm downloads](https://img.shields.io/npm/dm/@ericboles/react-native-ui-datepicker.svg)](https://www.npmjs.com/package/@ericboles/react-native-ui-datepicker)
+[![Github](https://img.shields.io/github/license/ericboles/react-native-ui-datepicker)](https://github.com/ericboles/react-native-ui-datepicker)
+[![gzipped size](https://img.shields.io/bundlephobia/minzip/@ericboles/react-native-ui-datepicker)](https://www.npmjs.com/package/@ericboles/react-native-ui-datepicker)
 
 </div>
 
-DateTimePicker component for React Native that allows you to create a customizable datetime picker. The component uses extensive set of props that allows you to customizing the calendar based on your own UI design. Please visit [demo](https://farhoudshapouran.github.io/react-native-ui-datepicker/).
+DateTimePicker component for React Native that allows you to create a customizable datetime picker. The component uses extensive set of props that allows you to customizing the calendar based on your own UI design. 
+
+## 🎉 Enhanced Fork Features
+
+This fork extends the original [react-native-ui-datepicker](https://github.com/farhoudshapouran/react-native-ui-datepicker) with additional features:
+
+- ⏰ **Minute Interval Support** - Control time picker intervals (1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30 minutes)
+- 📅 **Year-Only Picker** - Dedicated year picker that returns just the year integer
+- 🎨 **View Toggle Header** - Optional header with date/time toggle buttons
+- 🌓 **Enhanced Dark Mode** - Improved theme support throughout all components
+
+### New Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `minuteInterval` | `1` \| `2` \| `3` \| `4` \| `5` \| `6` \| `10` \| `12` \| `15` \| `20` \| `30` | Sets the minute interval for the time picker |
+| `yearPickerOnly` | `boolean` | Shows only year picker and returns year as integer |
+| `showViewPickerButtons` | `boolean` | Shows date/time toggle buttons in header |
+| `toggleHeaderLabel` | `string` | Optional label for the toggle header |
 
 ## Features
 
@@ -27,13 +45,13 @@ DateTimePicker component for React Native that allows you to create a customizab
 ## Installation
 
 ```sh
-npm install react-native-ui-datepicker
+npm install @ericboles/react-native-ui-datepicker
 ```
 
 Or
 
 ```sh
-yarn add react-native-ui-datepicker
+yarn add @ericboles/react-native-ui-datepicker
 ```
 
 ## Basic Usage
@@ -43,7 +61,7 @@ yarn add react-native-ui-datepicker
 
 ```jsx
 import { useState } from  'react';
-import DateTimePicker, { DateType, useDefaultStyles } from 'react-native-ui-datepicker';
+import DateTimePicker, { DateType, useDefaultStyles } from '@ericboles/react-native-ui-datepicker';
 
 export function Calendar() {
   const defaultStyles = useDefaultStyles();
@@ -100,6 +118,93 @@ export function Calendar() {
 <p align="center">
 <img src="/.github/images/modes-screenshot.png" />
 </p>
+
+## 🎯 New Feature Examples
+
+### Minute Interval Time Picker
+
+Control the time picker to show only specific minute intervals (e.g., 15-minute increments):
+
+```jsx
+import DateTimePicker from '@ericboles/react-native-ui-datepicker';
+
+export function AppointmentPicker() {
+  const [date, setDate] = useState<DateType>();
+
+  return (
+    <DateTimePicker
+      mode="single"
+      date={date}
+      onChange={({ date }) => setDate(date)}
+      timePicker
+      minuteInterval={15}  // Only show :00, :15, :30, :45
+    />
+  );
+}
+```
+
+**Available intervals:** 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30 minutes
+
+### Year-Only Picker
+
+Perfect for birth year selection or any scenario where you only need a year:
+
+```jsx
+import DateTimePicker from '@ericboles/react-native-ui-datepicker';
+
+export function BirthYearPicker() {
+  const [birthYear, setBirthYear] = useState<number>();
+
+  return (
+    <DateTimePicker
+      mode="single"
+      yearPickerOnly
+      startYear={1920}
+      endYear={new Date().getFullYear()}
+      onChange={({ date }) => {
+        // date is now just the year integer (e.g., 1984)
+        setBirthYear(date as number);
+      }}
+    />
+  );
+}
+```
+
+Features:
+- Returns just the year as an integer (e.g., `1984`)
+- Shows year range in header (e.g., "2020 - 2031")
+- Navigation buttons to move between year ranges
+- Fully themed for light/dark mode
+
+### View Toggle Header
+
+Add toggle buttons to switch between date and time views:
+
+```jsx
+import DateTimePicker from '@ericboles/react-native-ui-datepicker';
+
+export function FlightTimePicker() {
+  const [date, setDate] = useState<DateType>();
+
+  return (
+    <DateTimePicker
+      mode="single"
+      date={date}
+      onChange={({ date }) => setDate(date)}
+      timePicker
+      minuteInterval={15}
+      showViewPickerButtons
+      toggleHeaderLabel="Departure Time"
+    />
+  );
+}
+```
+
+This creates a header with:
+- Label on the left (e.g., "Departure Time")
+- Date and time toggle buttons on the right
+- Active button highlighted with primary theme color
+- Clean separation line at the bottom
 
 ## Single Mode props
 
