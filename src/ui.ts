@@ -55,6 +55,8 @@ export enum UI {
   button_prev_image = 'button_prev_image',
   /** The label of the hour and minutes. */
   time_label = 'time_label',
+  /** The text of individual items in the time wheel picker. */
+  time_wheel_label = 'time_wheel_label',
   /** The indicator of the selected hour and minutes. */
   time_selected_indicator = 'time_selected_indicator',
   /** The label displayed in the toggle header (when showViewToggleHeader is enabled). */

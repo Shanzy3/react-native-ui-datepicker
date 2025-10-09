@@ -188,7 +188,10 @@ const WheelWeb = ({
               opacity: displayValue?.value !== value ? 0.3 : 1,
             }}
           >
-            <Text style={styles?.time_label} className={classNames?.time_label}>
+            <Text
+              style={styles?.time_wheel_label || styles?.time_label}
+              className={classNames?.time_wheel_label || classNames?.time_label}
+            >
               {displayValue?.text}
             </Text>
           </Animated.View>
@@ -200,7 +203,8 @@ const WheelWeb = ({
 
 const defaultStyles = StyleSheet.create({
   container: {
-    minWidth: 30,
+    minWidth: 80,
+    paddingHorizontal: 8,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',

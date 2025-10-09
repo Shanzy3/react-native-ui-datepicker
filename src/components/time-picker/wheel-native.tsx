@@ -24,11 +24,11 @@ const WheelNative = ({
       options={items}
       onChange={setValue}
       containerStyle={defaultStyles.container}
-      itemTextStyle={styles?.time_label}
-      itemTextClassName={classNames?.time_label}
+      itemTextStyle={styles?.time_wheel_label || styles?.time_label}
+      itemTextClassName={classNames?.time_wheel_label || classNames?.time_label}
       selectedIndicatorClassName={classNames?.time_selected_indicator}
       selectedIndicatorStyle={styles?.time_selected_indicator}
-      itemHeight={44}
+      itemHeight={50}
       decelerationRate="fast"
     />
   );
