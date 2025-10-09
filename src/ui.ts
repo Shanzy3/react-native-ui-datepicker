@@ -57,6 +57,8 @@ export enum UI {
   time_label = 'time_label',
   /** The indicator of the selected hour and minutes. */
   time_selected_indicator = 'time_selected_indicator',
+  /** The label displayed in the toggle header (when showViewToggleHeader is enabled). */
+  toggle_header_label = 'toggle_header_label',
 }
 
 export enum SelectionState {

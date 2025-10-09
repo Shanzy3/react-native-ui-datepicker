@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useCalendarContext } from '../../calendar-context';
-import { YEAR_PAGE_SIZE } from '../../utils';
+import { YEAR_PAGE_SIZE, getYearRange } from '../../utils';
 import { ClassNames, Styles } from '../../types';
 import { UI } from '../../ui';
 import { isEqual } from 'lodash';
@@ -36,11 +36,25 @@ const PrevButton = ({
     onChangeYear,
     components = {},
     isRTL,
+    minDate,
+    yearPickerOnly,
   } = useCalendarContext();
 
   const colorScheme = useColorScheme();
   const theme = colorScheme ?? 'light';
   const defaultStyles = useMemo(() => createDefaultStyles(isRTL), [isRTL]);
+
+  // Check if we're at the minimum boundary for year navigation
+  const isAtMinBoundary = useMemo(() => {
+    if (calendarView !== 'year' || !minDate || !yearPickerOnly) return false;
+    
+    // Check if navigating backwards would result in any valid years
+    // We get the year range for the target position
+    const targetYears = getYearRange(currentYear - YEAR_PAGE_SIZE, minDate, undefined);
+    
+    // Disable if the target page would be empty
+    return targetYears.length === 0;
+  }, [calendarView, currentYear, minDate, yearPickerOnly]);
 
   const onPress = useCallback(() => {
     switch (calendarView) {
@@ -66,7 +80,7 @@ const PrevButton = ({
 
   return (
     <Pressable
-      disabled={calendarView === 'time'}
+      disabled={calendarView === 'time' || isAtMinBoundary}
       onPress={onPress}
       testID="btn-prev"
       accessibilityRole="button"

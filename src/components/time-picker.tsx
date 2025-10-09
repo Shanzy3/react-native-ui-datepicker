@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -45,7 +45,8 @@ const TimePicker = () => {
     timeZone,
     numerals = 'latn',
     use12Hours,
-    minuteInterval = 1
+    minuteInterval = 1,
+    minDate,
   } = useCalendarContext();
 
   const hours = useMemo(
@@ -58,32 +59,117 @@ const TimePicker = () => {
     [numerals, minuteInterval]
   );
 
-
   const { hour, hour12, minute, period } = getParsedDate(date || currentDate);
+
+  // Filter hours and minutes based on minDate
+  const { filteredHours, filteredMinutes } = useMemo(() => {
+    if (!minDate) {
+      return { filteredHours: hours, filteredMinutes: minutes };
+    }
+
+    const minDateTime = dayjs(minDate);
+    const currentDateTime = dayjs(date || currentDate);
+
+    // Check if we're on the same day as minDate
+    const isSameDay = currentDateTime.isSame(minDateTime, 'day');
+
+    if (!isSameDay) {
+      // Different day - no restrictions
+      return { filteredHours: hours, filteredMinutes: minutes };
+    }
+
+    // Same day - filter hours and minutes
+    const minHour = minDateTime.hour();
+    const minMinute = minDateTime.minute();
+
+    // Round up minMinute to next valid interval
+    const roundedMinMinute =
+      Math.ceil(minMinute / minuteInterval) * minuteInterval;
+
+    let filteredHours = hours;
+    let filteredMinutes = minutes;
+
+    if (use12Hours) {
+      // Convert 24h minHour to 12h format
+      const minHour12 =
+        minHour === 0 ? 12 : minHour > 12 ? minHour - 12 : minHour;
+      const minPeriod = minHour < 12 ? 'AM' : 'PM';
+
+      // Only filter if we're in the same period
+      if (period === minPeriod) {
+        // First, filter hours >= minHour
+        filteredHours = hours.filter((h) => Number(h.value) >= minHour12);
+
+        // Remove the min hour if it has no valid minutes remaining
+        if (roundedMinMinute >= 60) {
+          // All minutes are past, remove this hour
+          filteredHours = filteredHours.filter(
+            (h) => Number(h.value) !== minHour12
+          );
+        }
+
+        // Filter minutes based on selected hour
+        if (hour12 === minHour12) {
+          filteredMinutes = minutes.filter(
+            (m) => Number(m.value) >= roundedMinMinute
+          );
+        }
+      } else if (period === 'AM' && minPeriod === 'PM') {
+        // Can't select AM if minDate is PM on same day
+        filteredHours = [];
+        filteredMinutes = [];
+      }
+    } else {
+      // 24-hour format
+      // First, filter hours >= minHour
+      filteredHours = hours.filter((h) => Number(h.value) >= minHour);
+
+      // Remove the min hour if it has no valid minutes remaining
+      if (roundedMinMinute >= 60) {
+        // All minutes are past, remove this hour
+        filteredHours = filteredHours.filter(
+          (h) => Number(h.value) !== minHour
+        );
+      }
+
+      // Filter minutes based on selected hour
+      if (hour === minHour) {
+        filteredMinutes = minutes.filter(
+          (m) => Number(m.value) >= roundedMinMinute
+        );
+      }
+    }
+
+    return { filteredHours, filteredMinutes };
+  }, [
+    minDate,
+    date,
+    currentDate,
+    hours,
+    minutes,
+    hour,
+    hour12,
+    period,
+    use12Hours,
+    minuteInterval,
+  ]);
 
   // Select the nearest minute tick (ensures 00 is recognized)
   const selectedMinute = useMemo(() => {
     // Ensure minute is a number
-    const currentMinute = typeof minute === 'number'
-      ? minute
-      : parseInt(`${minute}`, 10);
-
-    console.log('TimePicker: useMemo selectedMinute compute', {
-      rawMinute: minute,
-      currentMinute,
-      availableTicks: minutes.map(m => m.value),
-    });
+    const currentMinute =
+      typeof minute === 'number' ? minute : parseInt(`${minute}`, 10);
 
     // Find the closest available minute option
-    if (minutes.length === 0) return 0;
-    
-    const firstValue = minutes[0]?.value;
+    if (filteredMinutes.length === 0) return 0;
+
+    const firstValue = filteredMinutes[0]?.value;
     if (firstValue === undefined) return 0;
-    
+
     let closest = Number(firstValue);
     let bestDiff = Math.abs(closest - currentMinute);
 
-    for (const m of minutes) {
+    for (const m of filteredMinutes) {
       const diff = Math.abs(Number(m.value) - currentMinute);
       if (diff < bestDiff) {
         bestDiff = diff;
@@ -91,9 +177,60 @@ const TimePicker = () => {
       }
     }
 
-    console.log('TimePicker: useMemo closest match', { closest, bestDiff });
     return closest;
-  }, [minutes, minute]);
+  }, [filteredMinutes, minute]);
+
+  // Auto-adjust time if current selection becomes invalid due to minDate filtering
+  useEffect(() => {
+    if (!minDate) return;
+
+    const currentHourValue = use12Hours ? hour12 : hour;
+    const hourExists = filteredHours.some(
+      (h) => Number(h.value) === currentHourValue
+    );
+    const minuteExists = filteredMinutes.some(
+      (m) => Number(m.value) === selectedMinute
+    );
+
+    // If current hour is not in filtered list, select first available hour
+    if (!hourExists && filteredHours.length > 0) {
+      const firstHour = filteredHours[0];
+      if (!firstHour) return;
+      
+      const firstAvailableHour = Number(firstHour.value);
+      let hour24 = firstAvailableHour;
+
+      if (use12Hours && period === 'PM' && firstAvailableHour < 12) {
+        hour24 = firstAvailableHour + 12;
+      }
+
+      const newDate = dayjs.tz(date, timeZone).hour(hour24);
+      onSelectDate(newDate);
+      return;
+    }
+
+    // If current minute is not in filtered list, select first available minute
+    if (!minuteExists && filteredMinutes.length > 0) {
+      const firstMinute = filteredMinutes[0];
+      if (!firstMinute) return;
+      
+      const firstAvailableMinute = Number(firstMinute.value);
+      const newDate = dayjs.tz(date, timeZone).minute(firstAvailableMinute);
+      onSelectDate(newDate);
+    }
+  }, [
+    minDate,
+    filteredHours,
+    filteredMinutes,
+    hour,
+    hour12,
+    selectedMinute,
+    use12Hours,
+    period,
+    date,
+    timeZone,
+    onSelectDate,
+  ]);
 
   const handleChangeHour = useCallback(
     (value: number) => {
@@ -114,7 +251,6 @@ const TimePicker = () => {
 
   const handleChangeMinute = useCallback(
     (value: number) => {
-      console.log('TimePicker: handleChangeMinute value', value);
       const newDate = dayjs.tz(date, timeZone).minute(value);
       onSelectDate(newDate);
     },
@@ -162,7 +298,7 @@ const TimePicker = () => {
         <View style={defaultStyles.wheelContainer}>
           <Wheel
             value={use12Hours ? hour12 : hour}
-            items={hours}
+            items={filteredHours}
             setValue={handleChangeHour}
             styles={styles}
             classNames={classNames}
@@ -174,7 +310,7 @@ const TimePicker = () => {
         <View style={defaultStyles.wheelContainer}>
           <Wheel
             value={selectedMinute}
-            items={minutes}
+            items={filteredMinutes}
             setValue={(value: number) => {
               handleChangeMinute(value);
             }}

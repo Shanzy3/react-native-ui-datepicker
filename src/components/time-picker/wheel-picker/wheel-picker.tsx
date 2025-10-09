@@ -55,13 +55,17 @@ const WheelPicker: React.FC<Props> = ({
   containerProps = {},
   flatListProps = {},
 }) => {
-  const didMountRef = useRef(false);
+  const hasMountedRef = useRef(false);
+  const isScrollingProgrammaticallyRef = useRef(false);
 
   const momentumStarted = useRef(false);
   const selectedIndex = options.findIndex((item) => item.value === value);
+  
+  // If value not found in options, default to first option
+  const safeSelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
 
   const flatListRef = useRef<FlatList>(null);
-  const [scrollY] = useState(new Animated.Value(selectedIndex * itemHeight));
+  const [scrollY] = useState(new Animated.Value(safeSelectedIndex * itemHeight));
 
   const containerHeight = (1 + visibleRest * 2) * itemHeight;
   const paddedOptions = useMemo(() => {
@@ -84,10 +88,8 @@ const WheelPicker: React.FC<Props> = ({
   );
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    
-        // Ignore the initial scroll event to prevent unwanted zero reset
-    if (!didMountRef.current) {
-      didMountRef.current = true;
+    // Ignore scroll events from programmatic scrollToIndex calls
+    if (isScrollingProgrammaticallyRef.current) {
       return;
     }
 
@@ -102,8 +104,8 @@ const WheelPicker: React.FC<Props> = ({
       index++;
     }
 
-    // Always fire for new index or when value is zero (top of hour)
-    if (index !== selectedIndex || options[index]?.value === 0) {
+    // Fire onChange when index changes
+    if (index !== safeSelectedIndex) {
       onChange(options[index]?.value ?? 0);
     }
   };
@@ -142,25 +144,47 @@ const WheelPicker: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    if (selectedIndex < 0 || selectedIndex >= options.length) {
+    if (options.length === 0) {
+      return; // No options available, skip validation
+    }
+    if (safeSelectedIndex < 0 || safeSelectedIndex >= options.length) {
       throw new Error(
-        `Selected index ${selectedIndex} is out of bounds [0, ${
+        `Selected index ${safeSelectedIndex} is out of bounds [0, ${
           options.length - 1
         }]`
       );
     }
-  }, [selectedIndex, options]);
+  }, [safeSelectedIndex, options]);
 
   /**
    * If selectedIndex is changed from outside (not via onChange) we need to scroll to the specified index.
    * This ensures that what the user sees as selected in the picker always corresponds to the value state.
    */
   useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+    }
+
+    // Skip if no options available
+    if (options.length === 0) {
+      return;
+    }
+
+    // Set flag to ignore scroll events from this programmatic scroll
+    isScrollingProgrammaticallyRef.current = true;
+
     flatListRef.current?.scrollToIndex({
-      index: selectedIndex,
+      index: safeSelectedIndex,
       animated: Platform.OS === 'ios',
     });
-  }, [selectedIndex, itemHeight]);
+
+    // Clear the flag after a delay to allow the scroll to complete
+    // Use a longer timeout for Android since animations might be different
+    const timeout = Platform.OS === 'ios' ? 100 : 300;
+    setTimeout(() => {
+      isScrollingProgrammaticallyRef.current = false;
+    }, timeout);
+  }, [safeSelectedIndex, itemHeight, options.length]);
 
   return (
     <View
@@ -193,7 +217,7 @@ const WheelPicker: React.FC<Props> = ({
         onMomentumScrollEnd={handleMomentumScrollEnd}
         snapToOffsets={offsets}
         decelerationRate={decelerationRate}
-        initialScrollIndex={selectedIndex}
+        initialScrollIndex={safeSelectedIndex}
         getItemLayout={(_, index) => ({
           length: itemHeight,
           offset: itemHeight * index,

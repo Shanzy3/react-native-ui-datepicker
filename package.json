@@ -1,6 +1,6 @@
 {
   "name": "@ericboles/react-native-ui-datepicker",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Customizable date picker for React Native with minute interval and year-only picker support",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

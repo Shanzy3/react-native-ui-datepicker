@@ -306,20 +306,46 @@ export const getFormatedDate = (date: DateType, format: string) =>
 export const getDate = (date: DateType) => dayjs(date);
 
 /**
- * Get year range
+ * Get year range for display
  *
  * @param year - year to get year range from
+ * @param minDate - optional minimum date to filter years
+ * @param maxDate - optional maximum date to filter years
  *
  * @returns year range
  */
-export const getYearRange = (year: number) => {
+export const getYearRange = (
+  year: number,
+  minDate?: DateType,
+  maxDate?: DateType
+) => {
   const endYear = YEAR_PAGE_SIZE * Math.ceil(year / YEAR_PAGE_SIZE);
   let startYear = endYear === year ? endYear : endYear - YEAR_PAGE_SIZE;
 
   if (startYear < 0) {
     startYear = 0;
   }
-  return Array.from({ length: YEAR_PAGE_SIZE }, (_, i) => startYear + i);
+
+  // Apply minDate/maxDate filtering if provided
+  const minYear = minDate ? getDateYear(minDate) : undefined;
+  const maxYear = maxDate ? getDateYear(maxDate) : undefined;
+
+  if (minYear !== undefined && startYear < minYear) {
+    startYear = minYear;
+  }
+
+  let yearCount = YEAR_PAGE_SIZE;
+  if (maxYear !== undefined && startYear + yearCount - 1 > maxYear) {
+    yearCount = maxYear - startYear + 1;
+  }
+
+  return Array.from({ length: yearCount }, (_, i) => startYear + i).filter(
+    (y) => {
+      if (minYear !== undefined && y < minYear) return false;
+      if (maxYear !== undefined && y > maxYear) return false;
+      return true;
+    }
+  );
 };
 
 /**

@@ -316,6 +316,12 @@ const DateTimePicker = (
   }, [timeZone, prevTimezone]);
 
 useEffect(() => {
+  // In yearPickerOnly mode, don't sync if date prop is not provided
+  // This allows internal state management
+  if (yearPickerOnly && !date) {
+    return;
+  }
+  
   if (mode === 'single') {
     let _date =
       (date &&
@@ -414,6 +420,7 @@ useEffect(() => {
       }
     }
 }, [
+  yearPickerOnly,
   mode,
   date,
   startDate,
@@ -604,19 +611,25 @@ useEffect(() => {
         onYearChange(value);
       }
 
-      dispatch({
-        type: CalendarActionKind.CHANGE_CURRENT_DATE,
-        payload: newDate,
-      });
-
-      // If yearPickerOnly mode, call onChange with just the year integer
-      if (yearPickerOnly && onChange) {
-        (onChange as SingleChange)({ date: value });
+      // If yearPickerOnly mode, update the selected date state and call onChange
+      if (yearPickerOnly) {
+        dispatch({
+          type: CalendarActionKind.CHANGE_SELECTED_DATE,
+          payload: { date: newDate },
+        });
+        
+        if (onChange) {
+          (onChange as SingleChange)({ date: value });
+        }
       } else {
+        dispatch({
+          type: CalendarActionKind.CHANGE_CURRENT_DATE,
+          payload: newDate,
+        });
         setCalendarView('day');
       }
     },
-    [setCalendarView, onYearChange, yearPickerOnly, onChange]
+    [setCalendarView, onYearChange, yearPickerOnly, onChange, dispatch]
   );
 
   const onChangeMonth = useCallback(

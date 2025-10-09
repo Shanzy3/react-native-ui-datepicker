@@ -36,7 +36,7 @@ const Years = () => {
   const selectedYear = getDateYear(date);
 
   const generateCells = useCallback(() => {
-    const years = getYearRange(currentYear);
+    const years = getYearRange(currentYear, minDate, maxDate);
     const activeYear = getDateYear(currentDate);
     const column = years.map((year) => {
       const isSelected = year === selectedYear;
@@ -116,7 +116,7 @@ const Years = () => {
     styles,
     mode,
     classNames,
-    components?.Year,
+    components,
     minDate,
     maxDate,
     numerals,

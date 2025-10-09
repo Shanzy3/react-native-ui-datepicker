@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useCalendarContext } from '../../calendar-context';
-import { YEAR_PAGE_SIZE } from '../../utils';
+import { YEAR_PAGE_SIZE, getYearRange } from '../../utils';
 import { ClassNames, Styles } from '../../types';
 import { UI } from '../../ui';
 import { isEqual } from 'lodash';
@@ -36,11 +36,25 @@ const NextButton = ({
     calendarView,
     components = {},
     isRTL,
+    maxDate,
+    yearPickerOnly,
   } = useCalendarContext();
 
   const colorScheme = useColorScheme();
   const theme = colorScheme ?? 'light';
   const defaultStyles = useMemo(() => createDefaultStyles(isRTL), [isRTL]);
+
+  // Check if we're at the maximum boundary for year navigation
+  const isAtMaxBoundary = useMemo(() => {
+    if (calendarView !== 'year' || !maxDate || !yearPickerOnly) return false;
+    
+    // Check if navigating forward would result in any valid years
+    // We get the year range for the target position
+    const targetYears = getYearRange(currentYear + YEAR_PAGE_SIZE, undefined, maxDate);
+    
+    // Disable if the target page would be empty
+    return targetYears.length === 0;
+  }, [calendarView, currentYear, maxDate, yearPickerOnly]);
 
   const onPress = useCallback(() => {
     switch (calendarView) {
@@ -66,7 +80,7 @@ const NextButton = ({
 
   return (
     <Pressable
-      disabled={calendarView === 'time'}
+      disabled={calendarView === 'time' || isAtMaxBoundary}
       onPress={onPress}
       testID="btn-next"
       accessibilityRole="button"

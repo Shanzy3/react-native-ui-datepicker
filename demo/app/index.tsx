@@ -6,6 +6,7 @@ import {
   MultipleDatePicker,
   RangeDatePicker,
   SingleDatePicker,
+  YearOnlyPicker,
 } from '@/components/examples';
 import { PackageManager } from '@/components/package-manager';
 import { FeatureCard } from '@/components/feature-card';
@@ -43,6 +44,9 @@ export default function MainPage() {
             <TabsTrigger value="multiple" className="px-2 shadow-none">
               <Text>Multiple</Text>
             </TabsTrigger>
+            <TabsTrigger value="yearonly" className="px-2 shadow-none">
+              <Text>Year Only</Text>
+            </TabsTrigger>
           </TabsList>
           <TabsContent
             value="single"
@@ -58,6 +62,12 @@ export default function MainPage() {
             className="min-h-[400px] items-center p-5"
           >
             <MultipleDatePicker />
+          </TabsContent>
+          <TabsContent
+            value="yearonly"
+            className="min-h-[400px] items-center p-5"
+          >
+            <YearOnlyPicker />
           </TabsContent>
         </Tabs>
       </View>

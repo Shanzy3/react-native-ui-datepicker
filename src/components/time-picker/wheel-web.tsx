@@ -31,15 +31,29 @@ const WheelWeb = ({
 }: WheelProps) => {
   const displayCount = 5;
   const translateY = useRef(new Animated.Value(0)).current;
-  const renderCount =
-    displayCount * 2 < items.length ? displayCount * 8 : displayCount * 2 - 1;
-  const circular = items.length >= displayCount;
   const height = 140;
   const radius = height / 2;
 
+  // Add padding to items like native implementation
+  const paddedItems = useMemo(() => {
+    const padding = Math.max(0, Math.floor(displayCount / 2));
+    const array: (PickerOption | null)[] = [...items];
+    for (let i = 0; i < padding; i++) {
+      array.unshift(null);
+      array.push(null);
+    }
+    return array;
+  }, [items, displayCount]);
+
+  const renderCount =
+    displayCount * 2 < paddedItems.length ? displayCount * 8 : displayCount * 2 - 1;
+  const circular = items.length >= displayCount;
+
   const valueIndex = useMemo(() => {
-    return items.findIndex((item) => item.value === value) || 0;
-  }, [items, value]);
+    const padding = Math.max(0, Math.floor(displayCount / 2));
+    const rawIndex = items.findIndex((item) => item.value === value);
+    return rawIndex >= 0 ? rawIndex + padding : padding;
+  }, [items, value, displayCount]);
 
   const panResponder = useMemo(() => {
     return PanResponder.create({
@@ -54,26 +68,31 @@ const WheelWeb = ({
       },
       onPanResponderRelease: (_, gestureState) => {
         translateY.extractOffset();
+        const padding = Math.max(0, Math.floor(displayCount / 2));
         let newValueIndex =
           valueIndex -
           Math.round(gestureState.dy / ((radius * 2) / displayCount));
+        
+        // Adjust for padding
         if (circular) {
-          newValueIndex = (newValueIndex + items.length) % items.length;
+          newValueIndex = (newValueIndex + paddedItems.length) % paddedItems.length;
         } else {
-          if (newValueIndex < 0) {
-            newValueIndex = 0;
-          } else if (newValueIndex >= items.length) {
-            newValueIndex = items.length - 1;
-          }
+          newValueIndex = Math.max(padding, Math.min(newValueIndex, paddedItems.length - padding - 1));
         }
-        const newValue = items[newValueIndex];
+        
+        const newValue = paddedItems[newValueIndex];
         if (newValue?.value === value) {
           translateY.setOffset(0);
           translateY.setValue(0);
-        } else if (newValue?.value) {
+        } else if (newValue?.value !== undefined && newValue?.value !== null) {
           setValue(newValue.value);
-        } else if (items[0]?.value) {
-          setValue(items[0].value);
+        } else {
+          // If we landed on a null (padding), find the nearest real value
+          const realIndex = newValueIndex < padding ? padding : paddedItems.length - padding - 1;
+          const realValue = paddedItems[realIndex];
+          if (realValue?.value !== undefined && realValue?.value !== null) {
+            setValue(realValue.value);
+          }
         }
       },
     });
@@ -84,7 +103,7 @@ const WheelWeb = ({
     setValue,
     value,
     valueIndex,
-    items,
+    paddedItems,
     translateY,
   ]);
 
@@ -95,13 +114,13 @@ const WheelWeb = ({
       let targetIndex = valueIndex + index - centerIndex;
       if (circular) {
         targetIndex =
-          ((targetIndex % items.length) + items.length) % items.length;
+          ((targetIndex % paddedItems.length) + paddedItems.length) % paddedItems.length;
       } else {
-        targetIndex = Math.max(0, Math.min(targetIndex, items.length - 1));
+        targetIndex = Math.max(0, Math.min(targetIndex, paddedItems.length - 1));
       }
-      return items[targetIndex] || items[0];
+      return paddedItems[targetIndex] || null;
     });
-  }, [renderCount, valueIndex, items, circular]);
+  }, [renderCount, valueIndex, paddedItems, circular]);
 
   const animatedAngles = useMemo(() => {
     //translateY.setValue(0);
@@ -147,7 +166,7 @@ const WheelWeb = ({
         const animatedAngle = animatedAngles[index];
         return (
           <Animated.View
-            key={`${displayValue?.text}-${index}`}
+            key={displayValue ? `${displayValue.value}-${displayValue.text}-${index}` : `null-${index}`}
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
               position: 'absolute',

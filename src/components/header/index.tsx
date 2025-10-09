@@ -48,20 +48,26 @@ const NavigationButtons = ({ styles, classNames, isRTL }: NavigationProps) => {
   );
 };
 
-const Header = ({
-  navigationPosition = 'around',
-  styles = {},
-  classNames = {},
-  isRTL,
-}: HeaderProps) => {
-  const style = useMemo(() => createDefaultStyles(isRTL), [isRTL]);
-  const { showViewToggleHeader, calendarView, yearPickerOnly, currentYear } = useCalendarContext();
+const Header: React.FC<HeaderProps> = () => {
+  const {
+    styles = {},
+    classNames = {},
+    isRTL,
+    navigationPosition = 'center',
+    yearPickerOnly,
+    currentYear,
+    minDate,
+    maxDate,
+    calendarView,
+    showViewToggleHeader,
+  } = useCalendarContext();
   const colorScheme = useColorScheme();
   const theme = (colorScheme ?? 'light') as 'light' | 'dark';
+  const style = useMemo(() => createDefaultStyles(isRTL), [isRTL]);
   
   // Show navigation/selectors based on mode
-  const shouldShowNavigation = yearPickerOnly 
-    ? calendarView === 'year' 
+  const shouldShowNavigation = yearPickerOnly
+    ? calendarView === 'year'
     : !(showViewToggleHeader && calendarView === 'time');
     
   return (
@@ -95,7 +101,8 @@ const Header = ({
                color: COLORS[theme].foreground 
              }}>
                {(() => {
-                 const years = getYearRange(currentYear);
+                 const years = getYearRange(currentYear, minDate, maxDate);
+                 if (years.length === 0) return '';
                  return `${years[0]} - ${years[years.length - 1]}`;
                })()}
              </Text>

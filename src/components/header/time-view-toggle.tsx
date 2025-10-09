@@ -18,6 +18,8 @@ export default function ViewToggle() {
     setCalendarView,
     calendarView,
     toggleHeaderLabel,
+    styles: customStyles = {},
+    classNames = {},
   } = useCalendarContext();
 
   const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
@@ -31,7 +33,14 @@ export default function ViewToggle() {
       ]}
     >
       {toggleHeaderLabel && (
-        <Text style={[styles.label, { color: themeColors.foreground }]}>
+        <Text
+          style={[
+            styles.label,
+            { color: themeColors.foreground },
+            customStyles.toggle_header_label,
+          ]}
+          className={classNames.toggle_header_label}
+        >
           {toggleHeaderLabel}
         </Text>
       )}

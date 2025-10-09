@@ -142,6 +142,10 @@ const customComparator = (
 ) => {
   return (
     prevProps.textClassName === nextProps.textClassName &&
+    prevProps.option?.value === nextProps.option?.value &&
+    prevProps.option?.text === nextProps.option?.text &&
+    prevProps.index === nextProps.index &&
+    prevProps.height === nextProps.height &&
     isEqual(prevProps.textStyle, nextProps.textStyle)
   );
 };

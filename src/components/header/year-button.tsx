@@ -16,9 +16,11 @@ const YearButton = () => {
     disableYearPicker,
     calendar = 'gregory',
     numerals = 'latn',
+    minDate,
+    maxDate,
   } = useCalendarContext();
 
-  const years = getYearRange(currentYear);
+  const years = getYearRange(currentYear, minDate, maxDate);
   return (
     <Pressable
       disabled={disableYearPicker}

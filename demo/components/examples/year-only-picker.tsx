@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Calendar } from '@/components/ui/calendar';
 import type { DateType } from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
 
 export default function YearOnlyPicker() {
   const [selectedYear, setSelectedYear] = useState<number | undefined>();
@@ -20,6 +21,8 @@ export default function YearOnlyPicker() {
         }}
         startYear={1950}
         endYear={2050}
+        minDate={dayjs('2019-01-01')}
+        maxDate={dayjs('2035-12-31')}
       />
       
       <View style={styles.resultContainer}>
@@ -28,6 +31,9 @@ export default function YearOnlyPicker() {
         </Text>
         <Text style={styles.typeText}>
           Type: {typeof selectedYear} 
+        </Text>
+        <Text style={styles.noteText}>
+          Years 2020-2035 only (minDate/maxDate)
         </Text>
       </View>
     </View>
@@ -59,5 +65,11 @@ const styles = StyleSheet.create({
   typeText: {
     fontSize: 14,
     color: '#666',
+  },
+  noteText: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 5,
+    fontStyle: 'italic',
   },
 });
