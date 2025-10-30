@@ -21,12 +21,11 @@ export type Period = 'AM' | 'PM';
 const createNumberList = (
   total: number,
   numerals: Numerals,
-  startFrom: number = 0,
   step: number = 1
 ): PickerOption[] => {
-  const count = Math.ceil((total - startFrom) / step);
+  const count = Math.ceil(total / step);
   return Array.from({ length: count }, (_, i) => {
-    const value = startFrom + i * step;
+    const value = i * step;
     const text =
       value < 10
         ? `${formatNumber(0, numerals)}${formatNumber(value, numerals)}`
@@ -51,12 +50,12 @@ const TimePicker = () => {
   } = useCalendarContext();
 
   const hours = useMemo(
-    () => createNumberList(use12Hours ? 12 : 24, numerals, use12Hours ? 1 : 0),
+    () => createNumberList(use12Hours ? 12 : 24, numerals),
     [numerals, use12Hours]
   );
 
   const minutes = useMemo(
-    () => createNumberList(60, numerals, 0, minuteInterval),
+    () => createNumberList(60, numerals, minuteInterval),
     [numerals, minuteInterval]
   );
 
