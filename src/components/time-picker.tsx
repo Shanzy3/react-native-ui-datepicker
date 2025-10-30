@@ -31,6 +31,7 @@ const createNumberList = (
       value < 10
         ? `${formatNumber(0, numerals)}${formatNumber(value, numerals)}`
         : formatNumber(value, numerals);
+    console.log('NS: ' + value + ' ' + text);
     return { value, text };
   });
 };
@@ -196,7 +197,7 @@ const TimePicker = () => {
     if (!hourExists && filteredHours.length > 0) {
       const firstHour = filteredHours[0];
       if (!firstHour) return;
-      
+
       const firstAvailableHour = Number(firstHour.value);
       let hour24 = firstAvailableHour;
 
@@ -213,7 +214,7 @@ const TimePicker = () => {
     if (!minuteExists && filteredMinutes.length > 0) {
       const firstMinute = filteredMinutes[0];
       if (!firstMinute) return;
-      
+
       const firstAvailableMinute = Number(firstMinute.value);
       const newDate = dayjs.tz(date, timeZone).minute(firstAvailableMinute);
       onSelectDate(newDate);
