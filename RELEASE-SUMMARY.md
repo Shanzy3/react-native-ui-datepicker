@@ -6,7 +6,7 @@
 - **Version**: `3.2.0`
 - **Published**: October 4, 2025
 - **NPM URL**: https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker
-- **GitHub URL**: https://github.com/ericboles/react-native-ui-datepicker
+- **GitHub URL**: https://github.com/Shanzy3/react-native-ui-datepicker
 - **Package Size**: 143.1 kB (compressed), 817.8 kB (unpacked)
 
 ## ✅ What Was Completed
@@ -128,7 +128,7 @@ yarn add @shanzy3/react-native-ui-datepicker
 
 ### Optional: Create GitHub Release
 
-1. Go to: https://github.com/ericboles/react-native-ui-datepicker/releases/new
+1. Go to: https://github.com/Shanzy3/react-native-ui-datepicker/releases/new
 2. Select tag: `v3.2.0`
 3. Title: `v3.2.0 - Enhanced Fork with Minute Intervals and Year Picker`
 4. Description:
@@ -149,7 +149,7 @@ yarn add @shanzy3/react-native-ui-datepicker
 
    ## 📖 Documentation
 
-   See the [README](https://github.com/ericboles/react-native-ui-datepicker#readme) for detailed usage examples.
+   See the [README](https://github.com/Shanzy3/react-native-ui-datepicker#readme) for detailed usage examples.
 
    ## 🙏 Credits
 

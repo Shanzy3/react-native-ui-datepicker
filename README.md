@@ -6,7 +6,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker)
 [![npm downloads](https://img.shields.io/npm/dm/@shanzy3/react-native-ui-datepicker.svg)](https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker)
-[![Github](https://img.shields.io/github/license/ericboles/react-native-ui-datepicker)](https://github.com/ericboles/react-native-ui-datepicker)
+[![Github](https://img.shields.io/github/license/Shanzy3/react-native-ui-datepicker)](https://github.com/Shanzy3/react-native-ui-datepicker)
 [![gzipped size](https://img.shields.io/bundlephobia/minzip/@shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker)
 
 </div>

@@ -28,7 +28,7 @@ npm login
 
 Enter:
 
-- Username: `ericboles` (or your NPM username)
+- Username: `shanzy3` (or your NPM username)
 - Password: (your NPM password)
 - Email: (your email)
 - One-time password: (if 2FA is enabled)
@@ -67,13 +67,13 @@ Create a tarball to test:
 npm pack
 ```
 
-This creates a file like `ericboles-react-native-ui-datepicker-3.2.0.tgz`.
+This creates a file like `shanzy3-react-native-ui-datepicker-3.2.0.tgz`.
 
 Test it in another project:
 
 ```bash
 cd /path/to/test-project
-npm install /path/to/ericboles-react-native-ui-datepicker-3.2.0.tgz
+npm install /path/to/shanzy3-react-native-ui-datepicker-3.2.0.tgz
 ```
 
 ### Step 5: Publish to NPM
@@ -99,7 +99,7 @@ npm notice ...
 npm notice === Tarball Details ===
 npm notice name:          @shanzy3/react-native-ui-datepicker
 npm notice version:       3.2.0
-npm notice filename:      ericboles-react-native-ui-datepicker-3.2.0.tgz
+npm notice filename:      shanzy3-react-native-ui-datepicker-3.2.0.tgz
 npm notice package size:  XX.X kB
 npm notice unpacked size: XXX.X kB
 npm notice shasum:        ...
@@ -132,7 +132,7 @@ git push origin v3.2.0
 
 Create a GitHub release:
 
-1. Go to https://github.com/ericboles/react-native-ui-datepicker/releases
+1. Go to https://github.com/shanzy3/react-native-ui-datepicker/releases
 2. Click "Create a new release"
 3. Select tag `v3.2.0`
 4. Title: `v3.2.0 - Enhanced Fork with Minute Intervals and Year Picker`
@@ -152,7 +152,7 @@ Create a GitHub release:
    npm install @shanzy3/react-native-ui-datepicker
    \`\`\`
 
-   See the [README](https://github.com/ericboles/react-native-ui-datepicker#readme) for usage examples.
+   See the [README](https://github.com/shanzy3/react-native-ui-datepicker#readme) for usage examples.
    ```
 
 ## Future Updates
@@ -233,5 +233,5 @@ import DateTimePicker from '@shanzy3/react-native-ui-datepicker';
 If you encounter issues:
 
 1. Check the [NPM docs](https://docs.npmjs.com/cli/v8/commands/npm-publish)
-2. Open an issue on [GitHub](https://github.com/ericboles/react-native-ui-datepicker/issues)
+2. Open an issue on [GitHub](https://github.com/shanzy3/react-native-ui-datepicker/issues)
 3. Verify the package is working: https://runkit.com/npm/@shanzy3/react-native-ui-datepicker
