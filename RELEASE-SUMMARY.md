@@ -2,10 +2,10 @@
 
 ## Package Details
 
-- **Name**: `@Shanzy3/react-native-ui-datepicker`
+- **Name**: `@shanzy3/react-native-ui-datepicker`
 - **Version**: `3.2.0`
 - **Published**: October 4, 2025
-- **NPM URL**: https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker
+- **NPM URL**: https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker
 - **GitHub URL**: https://github.com/ericboles/react-native-ui-datepicker
 - **Package Size**: 143.1 kB (compressed), 817.8 kB (unpacked)
 
@@ -61,7 +61,7 @@
 
 ### 3. Package Configuration
 
-- Changed package name to scoped: `@Shanzy3/react-native-ui-datepicker`
+- Changed package name to scoped: `@shanzy3/react-native-ui-datepicker`
 - Updated version to 3.2.0
 - Updated all repository URLs
 - Updated author attribution
@@ -79,9 +79,9 @@
 Users can now install your package with:
 
 ```bash
-npm install @Shanzy3/react-native-ui-datepicker
+npm install @shanzy3/react-native-ui-datepicker
 # or
-yarn add @Shanzy3/react-native-ui-datepicker
+yarn add @shanzy3/react-native-ui-datepicker
 ```
 
 ## 🔧 Usage Examples
@@ -144,7 +144,7 @@ yarn add @Shanzy3/react-native-ui-datepicker
    ## 📦 Installation
 
    \`\`\`bash
-   npm install @Shanzy3/react-native-ui-datepicker
+   npm install @shanzy3/react-native-ui-datepicker
    \`\`\`
 
    ## 📖 Documentation
@@ -165,7 +165,7 @@ Replace the original package in your projects:
 ```bash
 # In your app directory
 npm uninstall react-native-ui-datepicker
-npm install @Shanzy3/react-native-ui-datepicker
+npm install @shanzy3/react-native-ui-datepicker
 ```
 
 Update imports:
@@ -175,7 +175,7 @@ Update imports:
 import DateTimePicker from 'react-native-ui-datepicker';
 
 // New
-import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
+import DateTimePicker from '@shanzy3/react-native-ui-datepicker';
 ```
 
 ## 🔄 Future Updates
@@ -213,9 +213,9 @@ git push && git push --tags
 
 You can monitor your package at:
 
-- NPM: https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker
-- npm trends: https://npmtrends.com/@Shanzy3/react-native-ui-datepicker
-- Bundlephobia: https://bundlephobia.com/package/@Shanzy3/react-native-ui-datepicker@3.2.0
+- NPM: https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker
+- npm trends: https://npmtrends.com/@shanzy3/react-native-ui-datepicker
+- Bundlephobia: https://bundlephobia.com/package/@shanzy3/react-native-ui-datepicker@3.2.0
 
 ## 🎯 Summary
 

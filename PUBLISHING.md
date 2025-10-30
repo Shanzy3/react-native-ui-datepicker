@@ -1,8 +1,8 @@
-# Publishing Guide for @Shanzy3/react-native-ui-datepicker
+# Publishing Guide for @shanzy3/react-native-ui-datepicker
 
 ## Pre-Publishing Checklist
 
-- [x] Package name changed to `@Shanzy3/react-native-ui-datepicker`
+- [x] Package name changed to `@shanzy3/react-native-ui-datepicker`
 - [x] Version updated to `3.2.0`
 - [x] Repository URLs updated
 - [x] README updated with new features
@@ -84,20 +84,20 @@ When you're ready to publish:
 npm publish --access public
 ```
 
-The `--access public` flag is **required** for scoped packages like `@Shanzy3/...`.
+The `--access public` flag is **required** for scoped packages like `@shanzy3/...`.
 
 You should see output like:
 
 ```
 npm notice
-npm notice 📦  @Shanzy3/react-native-ui-datepicker@3.2.0
+npm notice 📦  @shanzy3/react-native-ui-datepicker@3.2.0
 npm notice === Tarball Contents ===
 npm notice 1.2kB   LICENSE
 npm notice 10.5kB  README.md
 npm notice 2.3kB   package.json
 npm notice ...
 npm notice === Tarball Details ===
-npm notice name:          @Shanzy3/react-native-ui-datepicker
+npm notice name:          @shanzy3/react-native-ui-datepicker
 npm notice version:       3.2.0
 npm notice filename:      ericboles-react-native-ui-datepicker-3.2.0.tgz
 npm notice package size:  XX.X kB
@@ -107,7 +107,7 @@ npm notice integrity:     ...
 npm notice total files:   XXX
 npm notice
 npm notice Publishing to https://registry.npmjs.org/ with tag latest
-+ @Shanzy3/react-native-ui-datepicker@3.2.0
++ @shanzy3/react-native-ui-datepicker@3.2.0
 ```
 
 ### Step 6: Verify Publication
@@ -115,11 +115,11 @@ npm notice Publishing to https://registry.npmjs.org/ with tag latest
 Check that it's live:
 
 ```bash
-npm view @Shanzy3/react-native-ui-datepicker
+npm view @shanzy3/react-native-ui-datepicker
 ```
 
 Visit your package page:
-https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker
+https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker
 
 ### Step 7: Tag the Release on GitHub
 
@@ -149,7 +149,7 @@ Create a GitHub release:
    ## Installation
 
    \`\`\`bash
-   npm install @Shanzy3/react-native-ui-datepicker
+   npm install @shanzy3/react-native-ui-datepicker
    \`\`\`
 
    See the [README](https://github.com/ericboles/react-native-ui-datepicker#readme) for usage examples.
@@ -215,7 +215,7 @@ After publishing, update your projects to use the new package:
 
 ```bash
 npm uninstall react-native-ui-datepicker
-npm install @Shanzy3/react-native-ui-datepicker
+npm install @shanzy3/react-native-ui-datepicker
 ```
 
 Update imports:
@@ -225,7 +225,7 @@ Update imports:
 import DateTimePicker from 'react-native-ui-datepicker';
 
 // New
-import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
+import DateTimePicker from '@shanzy3/react-native-ui-datepicker';
 ```
 
 ## Support
@@ -234,4 +234,4 @@ If you encounter issues:
 
 1. Check the [NPM docs](https://docs.npmjs.com/cli/v8/commands/npm-publish)
 2. Open an issue on [GitHub](https://github.com/ericboles/react-native-ui-datepicker/issues)
-3. Verify the package is working: https://runkit.com/npm/@Shanzy3/react-native-ui-datepicker
+3. Verify the package is working: https://runkit.com/npm/@shanzy3/react-native-ui-datepicker

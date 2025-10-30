@@ -4,10 +4,10 @@
 
 <div align="center">
 
-[![npm version](https://img.shields.io/npm/v/@Shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker)
-[![npm downloads](https://img.shields.io/npm/dm/@Shanzy3/react-native-ui-datepicker.svg)](https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker)
+[![npm version](https://img.shields.io/npm/v/@shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker)
+[![npm downloads](https://img.shields.io/npm/dm/@shanzy3/react-native-ui-datepicker.svg)](https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker)
 [![Github](https://img.shields.io/github/license/ericboles/react-native-ui-datepicker)](https://github.com/ericboles/react-native-ui-datepicker)
-[![gzipped size](https://img.shields.io/bundlephobia/minzip/@Shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker)
+[![gzipped size](https://img.shields.io/bundlephobia/minzip/@shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@shanzy3/react-native-ui-datepicker)
 
 </div>
 
@@ -45,13 +45,13 @@ This fork extends the original [react-native-ui-datepicker](https://github.com/f
 ## Installation
 
 ```sh
-npm install @Shanzy3/react-native-ui-datepicker
+npm install @shanzy3/react-native-ui-datepicker
 ```
 
 Or
 
 ```sh
-yarn add @Shanzy3/react-native-ui-datepicker
+yarn add @shanzy3/react-native-ui-datepicker
 ```
 
 ## Basic Usage
@@ -61,7 +61,7 @@ yarn add @Shanzy3/react-native-ui-datepicker
 
 ```jsx
 import { useState } from  'react';
-import DateTimePicker, { DateType, useDefaultStyles } from '@Shanzy3/react-native-ui-datepicker';
+import DateTimePicker, { DateType, useDefaultStyles } from '@shanzy3/react-native-ui-datepicker';
 
 export function Calendar() {
   const defaultStyles = useDefaultStyles();
@@ -126,7 +126,7 @@ export function Calendar() {
 Control the time picker to show only specific minute intervals (e.g., 15-minute increments):
 
 ```jsx
-import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
+import DateTimePicker from '@shanzy3/react-native-ui-datepicker';
 
 export function AppointmentPicker() {
   const [date, setDate] = useState<DateType>();
@@ -150,7 +150,7 @@ export function AppointmentPicker() {
 Perfect for birth year selection or any scenario where you only need a year:
 
 ```jsx
-import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
+import DateTimePicker from '@shanzy3/react-native-ui-datepicker';
 
 export function BirthYearPicker() {
   const [birthYear, setBirthYear] = useState<number>();
@@ -182,7 +182,7 @@ Features:
 Add toggle buttons to switch between date and time views:
 
 ```jsx
-import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
+import DateTimePicker from '@shanzy3/react-native-ui-datepicker';
 
 export function FlightTimePicker() {
   const [date, setDate] = useState<DateType>();
