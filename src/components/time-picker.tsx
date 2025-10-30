@@ -31,7 +31,6 @@ const createNumberList = (
       value < 10
         ? `${formatNumber(0, numerals)}${formatNumber(value, numerals)}`
         : formatNumber(value, numerals);
-    console.log('NS: ' + value + ' ' + text);
     return { value, text };
   });
 };
