@@ -4,14 +4,14 @@
 
 <div align="center">
 
- [![npm version](https://img.shields.io/npm/v/@ericboles/react-native-ui-datepicker)](https://www.npmjs.com/package/@ericboles/react-native-ui-datepicker)
-[![npm downloads](https://img.shields.io/npm/dm/@ericboles/react-native-ui-datepicker.svg)](https://www.npmjs.com/package/@ericboles/react-native-ui-datepicker)
+[![npm version](https://img.shields.io/npm/v/@Shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker)
+[![npm downloads](https://img.shields.io/npm/dm/@Shanzy3/react-native-ui-datepicker.svg)](https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker)
 [![Github](https://img.shields.io/github/license/ericboles/react-native-ui-datepicker)](https://github.com/ericboles/react-native-ui-datepicker)
-[![gzipped size](https://img.shields.io/bundlephobia/minzip/@ericboles/react-native-ui-datepicker)](https://www.npmjs.com/package/@ericboles/react-native-ui-datepicker)
+[![gzipped size](https://img.shields.io/bundlephobia/minzip/@Shanzy3/react-native-ui-datepicker)](https://www.npmjs.com/package/@Shanzy3/react-native-ui-datepicker)
 
 </div>
 
-DateTimePicker component for React Native that allows you to create a customizable datetime picker. The component uses extensive set of props that allows you to customizing the calendar based on your own UI design. 
+DateTimePicker component for React Native that allows you to create a customizable datetime picker. The component uses extensive set of props that allows you to customizing the calendar based on your own UI design.
 
 ## 🎉 Enhanced Fork Features
 
@@ -24,12 +24,12 @@ This fork extends the original [react-native-ui-datepicker](https://github.com/f
 
 ### New Props
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `minuteInterval` | `1` \| `2` \| `3` \| `4` \| `5` \| `6` \| `10` \| `12` \| `15` \| `20` \| `30` | Sets the minute interval for the time picker |
-| `yearPickerOnly` | `boolean` | Shows only year picker and returns year as integer |
-| `showViewPickerButtons` | `boolean` | Shows date/time toggle buttons in header |
-| `toggleHeaderLabel` | `string` | Optional label for the toggle header |
+| Prop                    | Type                                                                           | Description                                        |
+| ----------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------- |
+| `minuteInterval`        | `1` \| `2` \| `3` \| `4` \| `5` \| `6` \| `10` \| `12` \| `15` \| `20` \| `30` | Sets the minute interval for the time picker       |
+| `yearPickerOnly`        | `boolean`                                                                      | Shows only year picker and returns year as integer |
+| `showViewPickerButtons` | `boolean`                                                                      | Shows date/time toggle buttons in header           |
+| `toggleHeaderLabel`     | `string`                                                                       | Optional label for the toggle header               |
 
 ## Features
 
@@ -39,29 +39,29 @@ This fork extends the original [react-native-ui-datepicker](https://github.com/f
 - 🎨 Fully compatible with [NativeWind](https://www.nativewind.dev/).
 - 🌎 Easily localizable into any language.
 - 🕗 Handles different time zones seamlessly.
-- ⚙️ Customizable components allow extending rendered elements. 
+- ⚙️ Customizable components allow extending rendered elements.
 - ⚡ Fast & lightweight, only re-renders the elements that actually change.
 
 ## Installation
 
 ```sh
-npm install @ericboles/react-native-ui-datepicker
+npm install @Shanzy3/react-native-ui-datepicker
 ```
 
 Or
 
 ```sh
-yarn add @ericboles/react-native-ui-datepicker
+yarn add @Shanzy3/react-native-ui-datepicker
 ```
 
 ## Basic Usage
 
-1. Import the component and default styles or classNames from  `react-native-ui-datepicker`.
+1. Import the component and default styles or classNames from `react-native-ui-datepicker`.
 2. Choose a selection mode using the `mode` prop. The available modes are: `single`, `range`, and `multiple`.
 
 ```jsx
 import { useState } from  'react';
-import DateTimePicker, { DateType, useDefaultStyles } from '@ericboles/react-native-ui-datepicker';
+import DateTimePicker, { DateType, useDefaultStyles } from '@Shanzy3/react-native-ui-datepicker';
 
 export function Calendar() {
   const defaultStyles = useDefaultStyles();
@@ -80,20 +80,20 @@ export function Calendar() {
 
 ## Calendar Base Props
 
-| Name               | Type                              | Description                                        |
-| ------------------ | --------------------------------- | -------------------------------------------------- |
-| `mode`               | `"single"` \| `"range"` \| `"multiple"`   | Defines the DatePicker mode.                       |
-| `calendar`               | `"gregory"` \| `"jalali"`  | Defines the calendar type of DatePicker.                      |
-| `minDate`            | `DateType`                        | Defines the minimum selectable date in the DatePicker.   |
-| `maxDate`            | `DateType`                        | Defines the maximum selectable date in the DatePicker.   |
+| Name             | Type                                          | Description                                                                                                                    |
+| ---------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `mode`           | `"single"` \| `"range"` \| `"multiple"`       | Defines the DatePicker mode.                                                                                                   |
+| `calendar`       | `"gregory"` \| `"jalali"`                     | Defines the calendar type of DatePicker.                                                                                       |
+| `minDate`        | `DateType`                                    | Defines the minimum selectable date in the DatePicker.                                                                         |
+| `maxDate`        | `DateType`                                    | Defines the maximum selectable date in the DatePicker.                                                                         |
 | `enabledDates`   | `DateType[]` \| `(date: DateType) => boolean` | Defines an array of enabled dates or a function that returns `true` for enabled dates. It takes precedence over disabledDates. |
-| `disabledDates`      | `DateType[]` \| `(date: DateType) => boolean` | Defines an array of disabled dates or a function that returns `true` for disabled dates.  |
-| `firstDayOfWeek`     | `number`                          | Defines the first day of the week: 0-6 (0 = Sunday, 6 = Saturday). |
-| `initialView`        | `"day"` \| `"month"` \| `"year"` \| `"time"` | Defines the initial view of the DatePicker |
-| `month`              | `number`                              | Defines the currently selected month.     |
-| `year`              | `number`                              | Defines the currently selected year.      |
-| `onMonthChange`      | `(month: number) => void`             | Callback function triggered when the current month changes.   |
-| `onYearChange`       | `(year: number) => void`              | Callback function triggered when the current year changes.    |
+| `disabledDates`  | `DateType[]` \| `(date: DateType) => boolean` | Defines an array of disabled dates or a function that returns `true` for disabled dates.                                       |
+| `firstDayOfWeek` | `number`                                      | Defines the first day of the week: 0-6 (0 = Sunday, 6 = Saturday).                                                             |
+| `initialView`    | `"day"` \| `"month"` \| `"year"` \| `"time"`  | Defines the initial view of the DatePicker                                                                                     |
+| `month`          | `number`                                      | Defines the currently selected month.                                                                                          |
+| `year`           | `number`                                      | Defines the currently selected year.                                                                                           |
+| `onMonthChange`  | `(month: number) => void`                     | Callback function triggered when the current month changes.                                                                    |
+| `onYearChange`   | `(year: number) => void`                      | Callback function triggered when the current year changes.                                                                     |
 
 ## Example
 
@@ -126,7 +126,7 @@ export function Calendar() {
 Control the time picker to show only specific minute intervals (e.g., 15-minute increments):
 
 ```jsx
-import DateTimePicker from '@ericboles/react-native-ui-datepicker';
+import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
 
 export function AppointmentPicker() {
   const [date, setDate] = useState<DateType>();
@@ -150,7 +150,7 @@ export function AppointmentPicker() {
 Perfect for birth year selection or any scenario where you only need a year:
 
 ```jsx
-import DateTimePicker from '@ericboles/react-native-ui-datepicker';
+import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
 
 export function BirthYearPicker() {
   const [birthYear, setBirthYear] = useState<number>();
@@ -171,6 +171,7 @@ export function BirthYearPicker() {
 ```
 
 Features:
+
 - Returns just the year as an integer (e.g., `1984`)
 - Shows year range in header (e.g., "2020 - 2031")
 - Navigation buttons to move between year ranges
@@ -181,7 +182,7 @@ Features:
 Add toggle buttons to switch between date and time views:
 
 ```jsx
-import DateTimePicker from '@ericboles/react-native-ui-datepicker';
+import DateTimePicker from '@Shanzy3/react-native-ui-datepicker';
 
 export function FlightTimePicker() {
   const [date, setDate] = useState<DateType>();
@@ -201,6 +202,7 @@ export function FlightTimePicker() {
 ```
 
 This creates a header with:
+
 - Label on the left (e.g., "Departure Time")
 - Date and time toggle buttons on the right
 - Active button highlighted with primary theme color
@@ -208,17 +210,17 @@ This creates a header with:
 
 ## Single Mode props
 
-| Name         | Type               | Description                                                   |
-| ------------ | ------------------ | ------------------------------------------------------------- |
-| `date`       | `DateType`         | Specifies the currently selected date.                        |
-| `onChange`   | `({date}) => void` | Callback function triggered when the date change.             |
-| `timePicker` | `boolean`          | Whether to enable the time picker.                            |
-| `use12Hours` | `boolean`          | Whether to use a 12-hour format (AM/PM) in the time picker.   |
+| Name         | Type               | Description                                                 |
+| ------------ | ------------------ | ----------------------------------------------------------- |
+| `date`       | `DateType`         | Specifies the currently selected date.                      |
+| `onChange`   | `({date}) => void` | Callback function triggered when the date change.           |
+| `timePicker` | `boolean`          | Whether to enable the time picker.                          |
+| `use12Hours` | `boolean`          | Whether to use a 12-hour format (AM/PM) in the time picker. |
 
 ## Range Mode props
 
 | Name        | Type                             | Description                                                |
-| ----------- | -------------------------------- | -----------------------------------------------------------|
+| ----------- | -------------------------------- | ---------------------------------------------------------- |
 | `startDate` | `DateType`                       | Defines the start date for a range selection.              |
 | `endDate`   | `DateType`                       | Defines the end date for a range selection.                |
 | `onChange`  | `({startDate, endDate}) => void` | Callback function triggered when the start and end change. |
@@ -227,12 +229,12 @@ This creates a header with:
 
 ## Multiple Mode props
 
-| Name              | Type                | Description                                                 |
-| ----------------- | ------------------- | ----------------------------------------------------------- |
-| `dates`           | `DateType[]`        | Defines the selected dates for multiple date selection.     |
-| `onChange`        | `({dates}) => void` | Callback function triggered when the dates change.          |
-| `max`             | `number`            | Defines the maximum allowed days to select.                 |
-| `multiRangeMode`  | `boolean`           | Whether to display selecting multiple dates in a range row. |
+| Name             | Type                | Description                                                 |
+| ---------------- | ------------------- | ----------------------------------------------------------- |
+| `dates`          | `DateType[]`        | Defines the selected dates for multiple date selection.     |
+| `onChange`       | `({dates}) => void` | Callback function triggered when the dates change.          |
+| `max`            | `number`            | Defines the maximum allowed days to select.                 |
+| `multiRangeMode` | `boolean`           | Whether to display selecting multiple dates in a range row. |
 
 ![react-native-ui-datepicker-styles](https://user-images.githubusercontent.com/7857656/227260476-30ee8c25-f809-4dcf-bccf-cd1ffab8795a.jpg)
 
@@ -256,12 +258,12 @@ This creates a header with:
 
 DateTimePicker comes with a minimal style, making it easy to extend and customize according to your needs.
 
-| Name              | Type            | Description                                                     |
-| ----------------- | --------------- | --------------------------------------------------------------- |
-| `style`           | `ViewStyle`     | style for the calendar container.                               |
-| `className`       | `string`        | className for the calendar container.                           |
-| `styles`          | `Styles`        | Custom styles for specific components inside the calendar.      |
-| `classNames`      | `ClassNames`    | Custom classNames for specific components inside the calendar.  |
+| Name         | Type         | Description                                                    |
+| ------------ | ------------ | -------------------------------------------------------------- |
+| `style`      | `ViewStyle`  | style for the calendar container.                              |
+| `className`  | `string`     | className for the calendar container.                          |
+| `styles`     | `Styles`     | Custom styles for specific components inside the calendar.     |
+| `classNames` | `ClassNames` | Custom classNames for specific components inside the calendar. |
 
 ## Custom Styles
 
@@ -296,7 +298,9 @@ Use the `classNames` prop to apply custom class names instead of the default one
 These class names are mapped to the values of the [UI Theme](https://github.com/farhoudshapouran/react-native-ui-datepicker/blob/main/src/ui.ts) enums.
 
 ```jsx
-import DateTimePicker, { useDefaultClassNames } from 'react-native-ui-datepicker';
+import DateTimePicker, {
+  useDefaultClassNames,
+} from 'react-native-ui-datepicker';
 
 export function Calendar() {
   const defaultClassNames = useDefaultClassNames();
@@ -307,7 +311,7 @@ export function Calendar() {
         ...defaultClassNames,
         today: 'border-amber-500', // Add a border to today's date
         selected: 'bg-amber-500 border-amber-500', // Highlight the selected day
-        selected_label: "text-white", // Highlight the selected day label
+        selected_label: 'text-white', // Highlight the selected day label
         day: `${defaultClassNames.day} hover:bg-amber-100`, // Change background color on hover
         disabled: 'opacity-50', // Make disabled dates appear more faded
       }}
@@ -320,9 +324,9 @@ export function Calendar() {
 
 Use the `timeZone` prop to set the time zone for the calendar.
 
-| Name           | Type               | Description                                |
-| -------------- | ------------------ | ------------------------------------------ |
-| `timeZone`     | `string`           | Defines the timezone for the DatePicker.   |
+| Name       | Type     | Description                              |
+| ---------- | -------- | ---------------------------------------- |
+| `timeZone` | `string` | Defines the timezone for the DatePicker. |
 
 The time zone can be set using either an [IANA time zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) identifier or a UTC offset.
 
@@ -335,19 +339,18 @@ The time zone can be set using either an [IANA time zone](https://en.wikipedia.o
 
 DateTimePicker offers multiple options to customize the calendar for different languages.
 
-| Name         | Type                                 | Description                                                  |
-| ------------ | ------------------------------------ | ------------------------------------------------------------ |
-| `locale`     | `string`                             | Defines the locale of the DateTimePicker. Default is `en`    |
-| `numerals`   | [Numerals](#list-of-numeral-systems) | Specifies the numeral system to use (e.g., Arabic, Persian). |
+| Name       | Type                                 | Description                                                  |
+| ---------- | ------------------------------------ | ------------------------------------------------------------ |
+| `locale`   | `string`                             | Defines the locale of the DateTimePicker. Default is `en`    |
+| `numerals` | [Numerals](#list-of-numeral-systems) | Specifies the numeral system to use (e.g., Arabic, Persian). |
 
 ## Custom Components
 
 Use the `components` prop to replace the default rendered elements with your own custom components.
 
-| Name            | Type                      | Description                                              |
-| --------------- | ------------------------- | -------------------------------------------------------- |
-| `components`    | `CalendarComponents`      | Custom components to replace default calendar elements.  |
-
+| Name         | Type                 | Description                                             |
+| ------------ | -------------------- | ------------------------------------------------------- |
+| `components` | `CalendarComponents` | Custom components to replace default calendar elements. |
 
 ## Implementing a Custom Component
 
@@ -447,20 +450,20 @@ type CalendarYear = {
 
 ## List of Numeral Systems
 
-| Name       | Description                                   |
-| ---------- | --------------------------------------------- |
-| `latn`     | Western Latin.                                |
-| `arab`     | Standard Arabic.                              |
-| `arabext`  | Eastern Arabic-Indic (Persian).               |
-| `deva`     | Devanagari, used in Indian languages.         |
-| `beng`     | Bengali, used in Bengali and Assamese.        |
-| `guru`     | Gurmukhi, used in Punjab, India.              |
-| `gujr`     | Gujarati, used in Gujarat, India.             |
-| `orya`     | Odia, used in Odisha, India.                  |
-| `tamldec`  | Tamil, used in Tamil-speaking regions.        |
-| `telu`     | Telugu, used in Andhra Pradesh and Telangana. |
-| `knda`     | Kannada, used in Karnataka, India.            |
-| `mlym`     | Malayalam, used in Kerala, India.             |
+| Name      | Description                                   |
+| --------- | --------------------------------------------- |
+| `latn`    | Western Latin.                                |
+| `arab`    | Standard Arabic.                              |
+| `arabext` | Eastern Arabic-Indic (Persian).               |
+| `deva`    | Devanagari, used in Indian languages.         |
+| `beng`    | Bengali, used in Bengali and Assamese.        |
+| `guru`    | Gurmukhi, used in Punjab, India.              |
+| `gujr`    | Gujarati, used in Gujarat, India.             |
+| `orya`    | Odia, used in Odisha, India.                  |
+| `tamldec` | Tamil, used in Tamil-speaking regions.        |
+| `telu`    | Telugu, used in Andhra Pradesh and Telangana. |
+| `knda`    | Kannada, used in Karnataka, India.            |
+| `mlym`    | Malayalam, used in Kerala, India.             |
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/7857656/227187674-93012672-495d-4955-b4d3-46c3d016684e.jpg" alt="react-native-ui-datepicker" />
